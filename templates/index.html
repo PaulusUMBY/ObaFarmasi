@@ -1,0 +1,50 @@
+<!-- Navigation -->
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+<!-- Page Content -->
+{% block content %}
+<main class="container pt-2 mt-3" role="main">
+    <h3 class="card card-body text-center mt-5">ObaFarmasi</h3>
+    <div class="card card-body">
+      {% if totalRow %}
+        <div class="col-lg-9">
+          {% for item in preview %} 
+            {{ item|safe }}
+          {% endfor %} 
+          <p> show 5 for total rows: {{ totalRow|safe }}</p>
+        </div>
+      {% endif %}
+      <div class="loads">
+        <form action="/loadpriview" method="POST" id="data-preview">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <div class="form-group">
+            <button class="btn btn-secondary btn-block" type="submit" value="Submit">
+              load
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="">
+        <form action="/hitung" method="POST" id="apriori">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block" type="submit" value="Submit">Hitung</button>
+          </div>
+        </form>
+      {% if result %}
+        <div class="results col-lg-6">
+          <h4>Result</h4>
+          <div class="wrapper-content d-flex justify-content-center" style="margin-top: 2rem;">
+              {% for item in result %}
+                {{ item|safe }}
+              {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      </div>
+      <!-- end row -->
+  </div>
+</main>
+<!-- /.container -->
+{% endblock %}
